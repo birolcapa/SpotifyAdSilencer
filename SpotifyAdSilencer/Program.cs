@@ -5,9 +5,9 @@ using log4net;
 
 namespace SpotifyAdSilencer
 {
-    class Program
+    static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             // Create a logger
             ILog log = LogManager.GetLogger(typeof(SpotifyPlayerWrapper));
