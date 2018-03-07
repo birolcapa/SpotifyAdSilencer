@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using log4net;
 
 namespace SpotifyAdSilencer
 {
@@ -10,6 +7,16 @@ namespace SpotifyAdSilencer
     {
         static void Main(string[] args)
         {
+            // Create a logger
+            ILog log = LogManager.GetLogger(typeof(SpotifyPlayerWrapper));
+
+            // Create a spotify player wrapper
+            SpotifyPlayerWrapper spotifyPlayerWrapper = new SpotifyPlayerWrapper();
+            
+            Console.WriteLine("Hold esc key to stop");
+            do
+            {
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }
     }
 }
