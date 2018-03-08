@@ -14,28 +14,26 @@ namespace SpotifyAdSilencer
 
             // Create a spotify player wrapper
             SpotifyPlayerWrapper spotifyPlayerWrapper = new SpotifyPlayerWrapper();
-            
-            Console.WriteLine("Hold esc key to stop");
+            Console.WriteLine("SpotifyAdSilencer is started.");
+            Console.WriteLine("Hold ESC key to stop!");
             do
             {
                 while (!Console.KeyAvailable)
                 {
                     // Search for Spotify Player Window Class Name
-                    Dictionary<IntPtr, string> windowsByClassName = 
-                        spotifyPlayerWrapper.GetSpotifyPlayerWindowByClassName();
+                    Dictionary<IntPtr, MicrosoftSpyValues> windowCommaClass = 
+                        SpotifyPlayerWrapper.GetSpotifyPlayerWindowByProcessName();
 
-                    // If it is found, do following
-                    if (windowsByClassName.Count != 0)
+                    // If Spotify winfows is found, do following
+                    if (windowCommaClass.Count != 0)
                     {
-                        Console.WriteLine("Spotify Window is found");
-
                         // Search sub-window names in the class name
-                        foreach (KeyValuePair<IntPtr, string> window in windowsByClassName)
+                        foreach (KeyValuePair<IntPtr, MicrosoftSpyValues> window in windowCommaClass)
                         {
                             // If windows contains "-" then it plays song
-                            if (window.Value.Contains("-") || window.Value.Equals("Spotify"))
+                            if (window.Value.WindowName.Contains("-"))
                             {
-                                log.Info("Spotify is playing song");
+                                log.Debug("Spotify is playing song");
 
                                 // If volume is muted, then unmute it
                                 if (AudioManager.GetMasterVolumeMute())
@@ -58,7 +56,7 @@ namespace SpotifyAdSilencer
                     // If it is not found, log a message to screen
                     else
                     {
-                        Console.WriteLine("Error: windowsByClassName.Count == 0");
+                        log.Debug("Spotify process is not found!");
                     }
                     // Do this control every ten seconds
                     Thread.Sleep(10000);
